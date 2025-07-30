@@ -1,0 +1,2 @@
+# CCS4310-Personalized-Diet-Exercise-Planner-from-Meal-Images
+This repository contains our group project for the Deep Learning Module at SLTC Research University. The project delivers a Minimum Viable Product (MVP) integrating a deep learning model with explainability (XAI/LLM), supported by a frontend and backend. It includes code, datasets, documentation, architecture diagram, and demo video as per the assignment requirements.
