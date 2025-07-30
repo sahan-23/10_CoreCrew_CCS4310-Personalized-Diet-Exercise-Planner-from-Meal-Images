@@ -75,10 +75,11 @@ export function App() {
                   <VideoTutorial />
                 </div>
               </div>
-              <FeatureCards />
+              
               <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100 bg-opacity-80 backdrop-blur-sm">
                 <ImageUpload onImageUpload={handleImageUpload} />
               </div>
+              <FeatureCards />
             </> : <div className="space-y-8">
               <PredictionDisplay image={image} prediction={prediction} loading={loading} onReset={resetUpload} />
               {prediction && !loading && <RecommendationCard prediction={prediction} />}
