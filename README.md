@@ -31,11 +31,13 @@ Backend: (Flask / FastAPI / etc.)
 
 Cloud & Deployment: (AWS / GCP / etc.)
 
-🔹 Team Members & Roles
-Name Specialization Role
-Member 1 SE Model Development
-Member 2 DS Data Preprocessing
-... ... ...
+🔹 Team Members
+22ug1-0323 W.G.K.C. De Mel
+22ug1-0460 A.V.D. Amarathunga
+22ug1-0459 S.S.D. Fernando
+22ug1-0281 P.N.M.S.S. Wijesinghe
+22ug1-0471 K.K.P. Bimsara
+22ug1-0472 K.G.P. Kavishka
 
 🔹 Setup & Usage
 Follow the steps in the Setup Guide section to run the project locally or on the cloud.
