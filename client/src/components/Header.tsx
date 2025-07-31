@@ -27,7 +27,7 @@ export const Header = () => {
               Progress
             </a>
           </div>
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2">
             <button className="p-2 rounded-full bg-white/10 hover:bg-white/20 relative">
               <BellIcon className="w-5 h-5 text-white" />
               <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
