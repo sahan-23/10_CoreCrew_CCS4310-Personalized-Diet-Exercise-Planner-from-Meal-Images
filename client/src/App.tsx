@@ -38,6 +38,7 @@ export function App() {
     setImage(null);
     setPrediction(null);
   };
+  
   return <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100">
       <div className="absolute inset-0 bg-pattern opacity-5 pointer-events-none"></div>
       <Header />
