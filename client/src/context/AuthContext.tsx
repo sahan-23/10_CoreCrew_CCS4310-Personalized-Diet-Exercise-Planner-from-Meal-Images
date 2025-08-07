@@ -29,17 +29,23 @@ export const AuthProvider: React.FC<{
     setIsLoading(false);
   }, []);
   const login = async (email: string, password: string) => {
-    // This would normally be an API call
     setIsLoading(true);
     try {
-      // Mock API response
-      const mockUser = {
-        id: '123',
-        name: 'John Doe',
-        email
-      };
-      setUser(mockUser);
-      localStorage.setItem('user', JSON.stringify(mockUser));
+      // The backend expects 'username' and 'password' for login
+      const response = await fetch('http://127.0.0.1:5000/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: email, password }),
+      });
+      if (!response.ok) {
+        throw new Error('Login failed');
+      }
+      const data = await response.json();
+      // Save token
+      localStorage.setItem('token', data.access_token);
+      // Save user info (minimal, since backend does not return user details)
+      setUser({ id: '', name: email, email });
+      localStorage.setItem('user', JSON.stringify({ id: '', name: email, email }));
     } catch (error) {
       console.error('Login failed:', error);
       throw new Error('Login failed');
@@ -48,17 +54,19 @@ export const AuthProvider: React.FC<{
     }
   };
   const register = async (name: string, email: string, password: string) => {
-    // This would normally be an API call
     setIsLoading(true);
     try {
-      // Mock API response
-      const mockUser = {
-        id: '123',
-        name,
-        email
-      };
-      setUser(mockUser);
-      localStorage.setItem('user', JSON.stringify(mockUser));
+      // The backend expects 'username', 'email', and 'password' for register
+      const response = await fetch('http://127.0.0.1:5000/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: name, email, password }),
+      });
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.msg || 'Registration failed');
+      }
+      // Optionally, auto-login after registration (not implemented here)
     } catch (error) {
       console.error('Registration failed:', error);
       throw new Error('Registration failed');
