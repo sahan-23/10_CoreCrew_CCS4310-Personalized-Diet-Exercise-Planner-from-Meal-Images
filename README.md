@@ -7,18 +7,14 @@ The system detects the meal, estimates nutritional values (calories, carbs, prot
 
 ---
 
-## 🏗️ Project Development Plan
-
-### Team Members
-
-| ID         | Name                  |
-| ---------- | --------------------- |
-| 22ug1-0323 | W.G.K.C. De Mel       |
-| 22ug1-0460 | A.V.D. Amarathunga    |
-| 22ug1-0459 | S.S.D. Fernando       |
-| 22ug1-0281 | P.N.M.S.S. Wijesinghe |
-| 22ug1-0471 | K.K.P. Bimsara        |
-| 22ug1-0472 | K.G.P. Kavishka       |
+## ✨ Features
+- 📸 **Meal Image Recognition** – Detects food items from photos using a fine-tuned ResNet50 model.
+- 🔍 **Calorie & Macro Estimation** – Nutrition mapping for Sri Lankan and international dishes.
+- 🧠 **Explainable AI (XAI)** – Grad-CAM heatmaps showing why the model predicted a certain dish.
+- 🏃 **Personalized Plans** – Diet & workout suggestions tailored to your goals.
+- 💬 **LLM Integration** – Human-friendly reasoning for each recommendation.
+- ⚡ **REST API** – Flask backend with MongoDB storage.
+- 🌐 **Responsive Frontend** – Clean and easy-to-use web interface.
 
 ---
 
@@ -45,6 +41,35 @@ The system detects the meal, estimates nutritional values (calories, carbs, prot
 | XAI       | Grad-CAM visualization       |
 
 ---
+
+
+### Team Members
+
+| ID         | Name                  |
+| ---------- | --------------------- |
+| 22ug1-0323 | W.G.K.C. De Mel       |
+| 22ug1-0460 | A.V.D. Amarathunga    |
+| 22ug1-0459 | S.S.D. Fernando       |
+| 22ug1-0281 | P.N.M.S.S. Wijesinghe |
+| 22ug1-0471 | K.K.P. Bimsara        |
+| 22ug1-0472 | K.G.P. Kavishka       |
+
+---
+
+## 🚀 Installation & Running
+```bash
+# Clone repo
+git clone https://github.com/sahan-23/10_CoreCrew_CCS4310-Personalized-Diet-Exercise-Planner-from-Meal-Images
+
+# Backend
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload
+
+# Frontend
+cd client
+npm install
+npm run dev
 
 ### 4️⃣ Project Deliverables
 
