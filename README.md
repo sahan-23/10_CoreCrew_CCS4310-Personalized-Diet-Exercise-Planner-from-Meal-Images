@@ -29,7 +29,7 @@ The system detects the meal, estimates nutritional values (calories, carbs, prot
 - **Explainable AI (XAI):** Use Grad-CAM or SHAP to explain model predictions.
   
 ---
-Architecture Diagram
+### Architecture Diagram
 
 <img width="397" height="586" alt="Screenshot 2025-08-07 at 9 16 17 PM" src="https://github.com/user-attachments/assets/e6a24d07-4bab-4ac1-abe4-3204d4cc1eef" />
 
