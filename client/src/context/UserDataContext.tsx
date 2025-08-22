@@ -42,6 +42,14 @@ export interface DailyNutrition {
   totalFat: number;
   goalCalories: number;
 }
+export interface FoodItem {
+  id: string;
+  foodName: string;
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+}
 interface UserDataContextType {
   userProfile: UserProfile;
   updateUserProfile: (profile: Partial<UserProfile>) => void;
@@ -51,6 +59,8 @@ interface UserDataContextType {
   addActivity: (activity: Omit<Activity, 'id' | 'userId'>) => void;
   dailyNutrition: DailyNutrition | null;
   isProfileComplete: boolean;
+  foodDatabase: FoodItem[];
+  searchFoods: (query: string) => FoodItem[];
 }
 const UserDataContext = createContext<UserDataContextType | undefined>(undefined);
 export const UserDataProvider: React.FC<{
@@ -72,6 +82,25 @@ export const UserDataProvider: React.FC<{
   const [meals, setMeals] = useState<Meal[]>([]);
   const [activities, setActivities] = useState<Activity[]>([]);
   const [dailyNutrition, setDailyNutrition] = useState<DailyNutrition | null>(null);
+  const foodDatabase: FoodItem[] = [
+    { id: '1', foodName: 'Apple', calories: 95, protein: 0.5, carbs: 25, fat: 0.3 },
+    { id: '2', foodName: 'Banana', calories: 105, protein: 1.3, carbs: 27, fat: 0.4 },
+    { id: '3', foodName: 'Chicken Breast (100g)', calories: 165, protein: 31, carbs: 0, fat: 3.6 },
+    { id: '4', foodName: 'Brown Rice (1 cup)', calories: 215, protein: 5, carbs: 45, fat: 1.8 },
+    { id: '5', foodName: 'Salmon (100g)', calories: 208, protein: 20, carbs: 0, fat: 13 },
+    { id: '6', foodName: 'Broccoli (1 cup)', calories: 55, protein: 3.7, carbs: 11, fat: 0.6 },
+    { id: '7', foodName: 'Almonds (28g)', calories: 164, protein: 6, carbs: 6, fat: 14 },
+    { id: '8', foodName: 'Greek Yogurt (1 cup)', calories: 100, protein: 17, carbs: 6, fat: 0.4 },
+    { id: '9', foodName: 'Eggs (2 large)', calories: 156, protein: 13, carbs: 1.1, fat: 11 },
+    { id: '10', foodName: 'Oatmeal (1 cup cooked)', calories: 158, protein: 6, carbs: 27, fat: 3.2 },
+  ];
+
+  const searchFoods = (query: string): FoodItem[] => {
+    if (!query) return [];
+    return foodDatabase.filter(food =>
+      food.foodName.toLowerCase().includes(query.toLowerCase())
+    );
+  };
   useEffect(() => {
     if (user) {
       // Load user profile from localStorage
@@ -174,7 +203,9 @@ export const UserDataProvider: React.FC<{
     activities,
     addActivity,
     dailyNutrition,
-    isProfileComplete
+    isProfileComplete,
+    foodDatabase,
+    searchFoods
   }}>
       {children}
     </UserDataContext.Provider>;

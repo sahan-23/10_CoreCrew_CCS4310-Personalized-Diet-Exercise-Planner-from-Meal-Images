@@ -1,9 +1,11 @@
 import React, { useEffect, useState, createContext, useContext } from 'react';
+
 interface User {
   id: string;
   name: string;
   email: string;
 }
+
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
@@ -12,14 +14,15 @@ interface AuthContextType {
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
 }
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
 export const AuthProvider: React.FC<{
   children: React.ReactNode;
-}> = ({
-  children
-}) => {
+}> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     // Check for saved user in localStorage
     const savedUser = localStorage.getItem('user');
@@ -28,67 +31,92 @@ export const AuthProvider: React.FC<{
     }
     setIsLoading(false);
   }, []);
+
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     try {
-      // The backend expects 'username' and 'password' for login
-      const response = await fetch('http://127.0.0.1:5000/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: email, password }),
-      });
-      if (!response.ok) {
-        throw new Error('Login failed');
+      // Get registered users from localStorage
+      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+      
+      // Find user with matching email and password
+      const foundUser = registeredUsers.find((u: any) => u.email === email && u.password === password);
+      
+      if (!foundUser) {
+        throw new Error('Invalid email or password');
       }
-      const data = await response.json();
-      // Save token
-      localStorage.setItem('token', data.access_token);
-      // Save user info (minimal, since backend does not return user details)
-      setUser({ id: '', name: email, email });
-      localStorage.setItem('user', JSON.stringify({ id: '', name: email, email }));
+
+      // Create user object without password
+      const userToLogin = {
+        id: foundUser.id,
+        name: foundUser.name,
+        email: foundUser.email
+      };
+
+      setUser(userToLogin);
+      localStorage.setItem('user', JSON.stringify(userToLogin));
     } catch (error) {
       console.error('Login failed:', error);
-      throw new Error('Login failed');
+      throw error;
     } finally {
       setIsLoading(false);
     }
   };
+
   const register = async (name: string, email: string, password: string) => {
     setIsLoading(true);
     try {
-      // The backend expects 'username', 'email', and 'password' for register
-      const response = await fetch('http://127.0.0.1:5000/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: name, email, password }),
-      });
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.msg || 'Registration failed');
+      // Get existing registered users
+      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+      
+      // Check if email already exists
+      const existingUser = registeredUsers.find((u: any) => u.email === email);
+      if (existingUser) {
+        throw new Error('Email already registered');
       }
-      // Optionally, auto-login after registration (not implemented here)
+
+      // Create new user
+      const newUser = {
+        id: Date.now().toString(),
+        name,
+        email,
+        password
+      };
+
+      // Add to registered users
+      registeredUsers.push(newUser);
+      localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+
+      // Don't automatically log in after registration
+      // User will be redirected to login page
     } catch (error) {
       console.error('Registration failed:', error);
-      throw new Error('Registration failed');
+      throw error;
     } finally {
       setIsLoading(false);
     }
   };
+
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
   };
-  return <AuthContext.Provider value={{
-    user,
-    isAuthenticated: !!user,
-    isLoading,
-    login,
-    register,
-    logout
-  }}>
+
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        isAuthenticated: !!user,
+        isLoading,
+        login,
+        register,
+        logout,
+      }}
+    >
       {children}
-    </AuthContext.Provider>;
+    </AuthContext.Provider>
+  );
 };
+
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (context === undefined) {
