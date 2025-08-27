@@ -40,7 +40,7 @@ The system detects the meal, estimates nutritional values (calories, carbs, prot
 | Component | Technology Options           |
 | --------- | ---------------------------- |
 | Frontend  | React.js                     |
-| Backend   | Flask                        |
+| Backend   | FastAPI                      |
 | Database  | FMongoDB                     |
 | Model     | TensorFlow                   |
 | XAI       | Grad-CAM visualization       |
