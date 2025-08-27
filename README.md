@@ -39,9 +39,9 @@ The system detects the meal, estimates nutritional values (calories, carbs, prot
 
 | Component | Technology Options           |
 | --------- | ---------------------------- |
-| Frontend  | React.js                     |
+| Frontend  | Next.js                     |
 | Backend   | FastAPI                      |
-| Database  | FMongoDB                     |
+| Database  | SQLite                     |
 | Model     | TensorFlow                   |
 | XAI       | Grad-CAM visualization       |
 
@@ -81,7 +81,6 @@ npm run dev
 - ✅ MVP (Frontend + Backend): Image upload → Detect food → Show nutrition → Suggest diet/exercise
 - ✅ GitHub Repository: Code + Dataset + Documentation
 - ✅ Architecture Diagram: Data flow (Frontend → Backend → Model → XAI → User)
-- ✅ Video Presentation: 5 mins architecture + 5 mins demo
 - ✅ README.md: Setup steps, model usage, team roles
 
 ---
